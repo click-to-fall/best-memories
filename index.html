@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:"Poppins",sans-serif;
+    }
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,#ffd6e8,#f7b7d2,#fff1f7);
+  overflow-x:hidden;
+  color:#5a2740;
+}
+
+.main-page{
+  display:none;
+  min-height:100vh;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  position:relative;
+  background:url("back.jfif") center/cover no-repeat;
+}
+
+.main-page::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,.25);
+  z-index:0;
+}
+
+.main-card{
+  position:relative;
+  z-index:1;
+  background:rgba(255,255,255,.28);
+}
+    .page{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:25px;
+    }
+
+    .password-card{
+      width:min(950px,100%);
+      min-height:560px;
+      background:rgba(255,255,255,.42);
+      backdrop-filter:blur(18px);
+      border:1px solid rgba(255,255,255,.6);
+      border-radius:34px;
+      box-shadow:0 25px 70px rgba(151,62,104,.25);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      overflow:visible;
+    }
+
+    .photo-side{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:35px;
+      background:linear-gradient(160deg,rgba(255,255,255,.45),rgba(255,185,215,.35));
+    }
+
+    .photo-frame{
+      width:310px;
+      height:410px;
+      border-radius:160px 160px 30px 30px;
+      padding:12px;
+      background:linear-gradient(145deg,#fff,#ffc3dd);
+      box-shadow:0 18px 45px rgba(136,47,88,.25);
+    }
+
+    .photo-frame img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:145px 145px 22px 22px;
+      border:4px solid #fff;
+    }
+
+    .pass-side{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:35px;
+    }
+
+    .pass-box{
+      width:100%;
+      max-width:360px;
+      text-align:center;
+    }
+
+    .pass-box h1{
+      font-size:34px;
+      color:#a83a72;
+      margin-bottom:6px;
+    }
+
+    .pass-box p{
+      color:#8a5770;
+      margin-bottom:25px;
+      font-size:14px;
+    }
+
+    .dots{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      margin-bottom:22px;
+    }
+
+    .dot{
+      width:15px;
+      height:15px;
+      border-radius:50%;
+      border:2px solid #c85f91;
+      background:transparent;
+      transition:.25s;
+    }
+
+    .dot.filled{
+      background:#c85f91;
+      transform:scale(1.12);
+    }
+
+    .keypad{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .key{
+      border:none;
+      min-height:58px;
+      border-radius:18px;
+      background:rgba(255,255,255,.75);
+      color:#9b3268;
+      font-weight:700;
+      font-size:19px;
+      box-shadow:0 8px 18px rgba(135,50,91,.13);
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .key:hover{
+      transform:translateY(-2px);
+      background:#fff;
+    }
+
+    .clear{
+      font-size:14px;
+      color:#88425f;
+    }
+
+    .enter{
+      font-size:14px;
+      background:#c85f91;
+      color:#fff;
+    }
+
+    .error{
+      display:none;
+      margin-top:16px;
+      color:#c0275b;
+      font-weight:600;
+      animation:shake .25s linear;
+    }
+
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}
+      25%{transform:translateX(-5px)}
+      75%{transform:translateX(5px)}
+    }
+
+
+    @keyframes pop{
+      from{opacity:0;transform:scale(.94) translateY(20px)}
+      to{opacity:1;transform:scale(1) translateY(0)}
+    }
+
+    .main-title{
+      font-size:38px;
+      color:#a83a72;
+      margin-bottom:10px;
+    }
+
+    .main-subtitle{
+      color:#8a5770;
+      max-width:520px;
+      margin:0 auto 28px;
+      line-height:1.8;
+    }
+
+    .btn-row{
+      display:flex;
+      gap:18px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .main-btn{
+      border:none;
+      min-width:190px;
+      padding:16px 24px;
+      border-radius:24px;
+      background:linear-gradient(135deg,#c85f91,#f199bf);
+      color:#fff;
+      font-size:18px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 14px 28px rgba(168,58,114,.25);
+      transition:.25s;
+    }
+
+    .main-btn:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 34px rgba(168,58,114,.32);
+    }
+
+    .letter-page{
+      display:none;
+      min-height:100vh;
+      align-items:center;
+      justify-content:center;
+      padding:25px;
+    }
+
+    .letter-card{
+      width:min(820px,100%);
+      background:rgba(255,255,255,.50);
+      backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,.70);
+      box-shadow:0 25px 70px rgba(151,62,104,.25);
+      border-radius:36px;
+      padding:28px 22px;
+      text-align:center;
+      animation:pop .55s ease;
+    }
+
+    .letter-title{
+      font-size:36px;
+      color:#a83a72;
+      margin-bottom:8px;
+    }
+
+    .envelope-stage{
+      min-height:650px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow:hidden;
+      border-radius:28px;
+      background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,210,231,.35));
+    }
+
+    .open-envelope{
+      width:330px;
+      height:220px;
+      position:relative;
+      cursor:pointer;
+      transform-style:preserve-3d;
+      filter:drop-shadow(0 25px 28px rgba(128,39,82,.22));
+    }
+
+    .open-envelope .env-back{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,#f7a5c8,#f6c7dc);
+      border-radius:0 0 22px 22px;
+      z-index:1;
+    }
+
+    .open-envelope .env-flap{
+      position:absolute;
+      top:0;
+      left:0;
+      width:0;
+      height:0;
+      border-left:165px solid transparent;
+      border-right:165px solid transparent;
+      border-top:120px solid #ffd8e9;
+      transform-origin:top center;
+      transition:transform .8s ease;
+      z-index:4;
+    }
+
+    .open-envelope .env-left{
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:0;
+      height:0;
+      border-bottom:220px solid #f28fba;
+      border-right:170px solid transparent;
+      z-index:3;
+      border-radius:0 0 0 22px;
+    }
+
+    .open-envelope .env-right{
+      position:absolute;
+      bottom:0;
+      right:0;
+      width:0;
+      height:0;
+      border-bottom:220px solid #f5a6c8;
+      border-left:170px solid transparent;
+      z-index:3;
+      border-radius:0 0 22px 0;
+    }
+
+    .open-envelope .heart-seal{
+      position:absolute;
+      top:98px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:5;
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      background:#fff;
+      display:grid;
+      place-items:center;
+      font-size:29px;
+      box-shadow:0 8px 18px rgba(133,44,85,.2);
+      transition:.45s ease;
+    }
+
+    .letter-paper{
+      position:absolute;
+      width:min(620px,94vw);
+      left:50%;
+      top:170px;
+      transform:translate(-50%,0) scale(.86);
+      background:#fffdf8;
+      border:1px solid rgba(199,95,145,.22);
+      border-radius:22px;
+      padding:30px 26px;
+      z-index:2;
+      opacity:0;
+      box-shadow:0 22px 45px rgba(123,40,79,.18);
+      transition:all .9s ease .2s;
+    }
+
+    .letter-paper p{
+      font-size:16px;
+      line-height:1.75;
+      color:#67324d;
+    }
+
+    .envelope-stage.opened .open-envelope .env-flap{
+      transform:rotateX(180deg);
+    }
+
+    .envelope-stage.opened .open-envelope .heart-seal{
+      opacity:0;
+      transform:translateX(-50%) scale(.5);
+    }
+
+    .envelope-stage.opened .letter-paper{
+      top:-155px;
+      opacity:1;
+      transform:translate(-50%,0) scale(1);
+      z-index:6;
+    }
+
+    .for-you-page{
+      display:none;
+      min-height:100vh;
+      align-items:center;
+      justify-content:center;
+      padding:25px;
+    }
+
+    .for-you-card{
+      width:min(760px,100%);
+      background:rgba(255,255,255,.50);
+      backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,.70);
+      box-shadow:0 25px 70px rgba(151,62,104,.25);
+      border-radius:36px;
+      padding:28px 22px;
+      text-align:center;
+      animation:pop .55s ease;
+    }
+
+    .for-you-title{
+      font-size:36px;
+      color:#a83a72;
+      margin-bottom:20px;
+    }
+
+    .video-box{
+      background:rgba(255,255,255,.55);
+      border-radius:28px;
+      padding:18px;
+      box-shadow:0 18px 40px rgba(151,62,104,.18);
+    }
+
+    .video-box video{
+      width:100%;
+      max-height:520px;
+      border-radius:22px;
+      background:#000;
+      display:block;
+    }
+
+    .video-text{
+      margin-top:20px;
+      font-size:18px;
+      line-height:2;
+      color:#6a314c;
+      font-weight:600;
+      direction:rtl;
+    }
+
+    .back-btn{
+      margin-top:20px;
+      border:none;
+      padding:12px 22px;
+      border-radius:18px;
+      color:#a83a72;
+      background:#fff;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    @media(max-width:780px){
+      .password-card{
+        grid-template-columns:1fr;
+      }
+
+      .photo-frame{
+        width:240px;
+        height:315px;
+      }
+
+      .pass-box h1,
+      .main-title{
+        font-size:29px;
+      }
+
+      .main-btn{
+        width:100%;
+      }
+
+      .open-envelope{
+        width:285px;
+        height:190px;
+      }
+
+      .open-envelope .env-flap{
+        border-left-width:142.5px;
+        border-right-width:142.5px;
+        border-top-width:105px;
+      }
+
+      .open-envelope .env-left{
+        border-bottom-width:190px;
+        border-right-width:145px;
+      }
+
+      .open-envelope .env-right{
+        border-bottom-width:190px;
+        border-left-width:145px;
+      }
+
+      .letter-paper p{
+        font-size:14px;
+      }
+    }
+
+    @media (max-width:600px){
+      .letter-page{ padding:14px; align-items:flex-start; }
+      .letter-card{ padding:22px 12px; border-radius:28px; margin-top:12px; }
+      .letter-title{ font-size:28px; }
+      .envelope-stage{ min-height:720px; padding-top:80px; }
+      .letter-paper{ width:92vw; padding:24px 18px; }
+      .letter-paper p{ font-size:14px; line-height:1.7; }
+      .envelope-stage.opened .letter-paper{ top:-190px; }
+
+      .for-you-card{
+        padding:22px 14px;
+        border-radius:28px;
+      }
+
+      .for-you-title{
+        font-size:28px;
+      }
+
+      .video-text{
+        font-size:16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section id="passwordPage" class="page">
+    <div class="password-card">
+      <div class="photo-side">
+        <div class="photo-frame">
+          <img src="pass.png" alt="Photo">
+        </div>
+      </div>
+
+      <div class="pass-side">
+        <div class="pass-box">
+          <h1>Enter Passcode</h1>
+          <p>Write the special date to open it.</p>
+
+          <div class="dots" id="dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+
+          <div class="keypad">
+            <button class="key" onclick="pressNumber('1')">1</button>
+            <button class="key" onclick="pressNumber('2')">2</button>
+            <button class="key" onclick="pressNumber('3')">3</button>
+            <button class="key" onclick="pressNumber('4')">4</button>
+            <button class="key" onclick="pressNumber('5')">5</button>
+            <button class="key" onclick="pressNumber('6')">6</button>
+            <button class="key" onclick="pressNumber('7')">7</button>
+            <button class="key" onclick="pressNumber('8')">8</button>
+            <button class="key" onclick="pressNumber('9')">9</button>
+            <button class="key clear" onclick="clearPass()">Clear</button>
+            <button class="key" onclick="pressNumber('0')">0</button>
+            <button class="key enter" onclick="checkPass()">Enter</button>
+          </div>
+
+          <div class="error" id="error">Wrong passcode, try again!</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mainPage" class="main-page">
+    <div class="main-card">
+      <h1 class="main-title">Hi gang🥰</h1>
+      <p class="main-subtitle">
+        This was made especially for you, in a way that's as special as you are,
+        and made to keep the memory alive between us ❤️
+      </p>
+
+      <div class="btn-row">
+        <button class="main-btn" onclick="showOpen()">Open</button>
+        <button class="main-btn" onclick="showForYou()">For You</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="letterPage" class="letter-page">
+    <div class="letter-card">
+      <h1 class="letter-title">A Letter For You 🫂</h1>
+
+      <div class="envelope-stage" id="envelopeStage">
+        <div class="open-envelope" onclick="openLetter()">
+          <div class="env-back"></div>
+          <div class="env-flap"></div>
+
+          <div class="letter-paper">
+            <p>
+              You are the best people I have ever known. You always support and encourage me,
+              even in all the crazy things I do. We've been through a lot together — laughter,
+              arguments — and we still have more to live and more memories to make. It doesn't
+              end here. You are not just uni friends. I honestly can't imagine my life without you.
+              You will always remain the closest memory to my heart and the irreplaceable friends
+              in my life. I’m truly rich forever because I have friends like you🫂❤️
+            </p>
+          </div>
+
+          <div class="env-left"></div>
+          <div class="env-right"></div>
+          <div class="heart-seal">❤️</div>
+        </div>
+      </div>
+
+      <button class="back-btn" onclick="backToMain()">Back</button>
+    </div>
+  </section>
+
+  <section id="forYouPage" class="for-you-page">
+    <div class="for-you-card">
+      <h1 class="for-you-title">For You ❤️</h1>
+
+      <div class="video-box">
+        <video controls>
+          <source src="vid1.mp4" type="video/mp4">
+        </video>
+
+        <p class="video-text">
+          اخويا الي عمره مااختفي😂
+          <br>
+          والله الذ حد ف الدنيا وانشف دماغ بس كله فداكي الصدف خير بس مفيش خير اكتر منك ياسرسوره بحبك اوي وعامه بفكرك ان مخلصتش ع كده😫❤️
+        </p>
+      </div>
+
+      <button class="back-btn" onclick="backToMainFromForYou()">Back</button>
+    </div>
+  </section>
+
+  <script>
+    const correctPassword = "2352026";
+    let enteredPassword = "";
+
+    function updateDots(){
+      const dots = document.querySelectorAll(".dot");
+      dots.forEach((dot,index)=>{
+        dot.classList.toggle("filled", index < enteredPassword.length);
+      });
+    }
+
+    function pressNumber(num){
+      if(enteredPassword.length < correctPassword.length){
+        enteredPassword += num;
+        updateDots();
+      }
+
+      if(enteredPassword.length === correctPassword.length){
+        checkPass();
+      }
+    }
+
+    function clearPass(){
+      enteredPassword = "";
+      updateDots();
+      document.getElementById("error").style.display = "none";
+    }
+
+    function checkPass(){
+      if(enteredPassword === correctPassword){
+        document.getElementById("passwordPage").style.display = "none";
+        document.getElementById("mainPage").style.display = "flex";
+      }else{
+        document.getElementById("error").style.display = "block";
+        enteredPassword = "";
+        updateDots();
+      }
+    }
+
+    function showOpen(){
+      document.getElementById("mainPage").style.display = "none";
+      document.getElementById("letterPage").style.display = "flex";
+      document.getElementById("envelopeStage").classList.remove("opened");
+    }
+
+    function openLetter(){
+      document.getElementById("envelopeStage").classList.add("opened");
+    }
+
+    function backToMain(){
+      document.getElementById("letterPage").style.display = "none";
+      document.getElementById("mainPage").style.display = "flex";
+    }
+
+    function showForYou(){
+      document.getElementById("mainPage").style.display = "none";
+      document.getElementById("forYouPage").style.display = "flex";
+    }
+
+    function backToMainFromForYou(){
+      document.getElementById("forYouPage").style.display = "none";
+      document.getElementById("mainPage").style.display = "flex";
+    }
+  </script>
+</body>
+</html>
